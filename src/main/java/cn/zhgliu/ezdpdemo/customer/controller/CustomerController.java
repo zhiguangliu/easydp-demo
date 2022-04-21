@@ -5,9 +5,11 @@ import cn.zhgliu.ezdp.helper.DataPermHelper;
 import cn.zhgliu.ezdpdemo.customer.entity.Customer;
 import cn.zhgliu.ezdpdemo.customer.service.ICustomerService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.stereotype.Controller;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
  * @author zhgliu
  * @since 2022-04-17
  */
-@Controller
+@RestController
 @RequestMapping("/customer/customer")
 public class CustomerController {
 
@@ -31,6 +33,12 @@ public class CustomerController {
     public List<Customer> listAll(String userId) {
         List<Customer> list = iCustomerService.list(new QueryWrapper<>());
         return list;
+    }
+
+    @GetMapping("/page")
+    public IPage<Customer> page(String userId) {
+        IPage<Customer> ret = iCustomerService.page(new Page<>(1, 5), new QueryWrapper<>());
+        return ret;
     }
 
     @GetMapping("/listAllWithPerm")
