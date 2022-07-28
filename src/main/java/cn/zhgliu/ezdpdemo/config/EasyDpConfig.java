@@ -9,6 +9,7 @@ import cn.zhgliu.ezdp.finder.impl.http.HttpDataPermRuleFinder;
 import cn.zhgliu.ezdp.resolver.DataPermSqlResolver;
 import cn.zhgliu.ezdp.resolver.impl.ali.druid.DruidSQLResolver;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,8 +27,11 @@ public class EasyDpConfig {
     public MybatisPlusInterceptor mybatisPlusInterceptor(@Autowired DataPermClient dataPermClient) {
         MybatisPlusInterceptor i = new MybatisPlusInterceptor();
         i.addInnerInterceptor(new MybatisPlusDataPermInterceptor(dataPermClient));
+        i.addInnerInterceptor(new PaginationInnerInterceptor());
         return i;
     }
+
+
 
     @Bean
     public DataPermMatchingModeFinder matchingModeFinder() {

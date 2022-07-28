@@ -43,9 +43,16 @@ public class CustomerController {
 
     @GetMapping("/listAllWithPerm")
     public List<Customer> listAllWithPerm(String userId) {
-        DataPermHelper.applyPermission(userId, "cn.zhgliu.ezdpdemo.customer.mapper.CustomerMapper.selectList");
+        DataPermHelper.applyPermission(userId);
         List<Customer> list = iCustomerService.list(new QueryWrapper<>());
         return list;
+    }
+
+    @GetMapping("/pageWithPerm")
+    public IPage<Customer> pageWithPerm(String userId) {
+        DataPermHelper.applyPermission(userId);
+        IPage<Customer> ret = iCustomerService.page(new Page<>(2, 3), new QueryWrapper<>());
+        return ret;
     }
 
 }
