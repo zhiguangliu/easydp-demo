@@ -11,17 +11,18 @@ import cn.zhgliu.ezdp.resolver.impl.ali.druid.DruidSQLResolver;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EasyDpConfig {
 
-    //    @Value()
-    private String dataPermServer="http://localhost:8899/ezdp";
+        @Value("${ezdp.server}")
+    private String dataPermServer;
 
-    //    @Value()
-    private String subSystem="SELLER_SYSTEM";
+    @Value("${ezdp.subSystem}")
+    private String subSystem;
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(@Autowired DataPermClient dataPermClient) {

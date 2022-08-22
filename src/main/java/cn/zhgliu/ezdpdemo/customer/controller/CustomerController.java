@@ -44,7 +44,8 @@ public class CustomerController {
     @GetMapping("/listAllWithPerm")
     public List<Customer> listAllWithPerm(String userId) {
         DataPermHelper.applyPermission(userId);
-        List<Customer> list = iCustomerService.list(new QueryWrapper<>());
+        Customer param = new Customer();
+        List<Customer> list = iCustomerService.list(new QueryWrapper<Customer>().like("customer_name","公司").like("customer_name","公司"));
         return list;
     }
 
