@@ -50,9 +50,9 @@ public class CustomerController {
     }
 
     @GetMapping("/pageWithPerm")
-    public IPage<Customer> pageWithPerm(String userId) {
+    public IPage<Customer> pageWithPerm(String userId,Integer current,Integer size) {
         DataPermHelper.applyPermission(userId);
-        IPage<Customer> ret = iCustomerService.page(new Page<>(2, 3), new QueryWrapper<>());
+        IPage<Customer> ret = iCustomerService.page(new Page<>(current, size), new QueryWrapper<Customer>().like("customer_name","公司").like("customer_name","公司"));
         return ret;
     }
 
