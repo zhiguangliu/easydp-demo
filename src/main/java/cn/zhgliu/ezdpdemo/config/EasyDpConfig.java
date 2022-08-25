@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EasyDpConfig {
 
-        @Value("${ezdp.server}")
+    @Value("${ezdp.server}")
     private String dataPermServer;
 
     @Value("${ezdp.subSystem}")
@@ -27,11 +27,10 @@ public class EasyDpConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(@Autowired DataPermClient dataPermClient) {
         MybatisPlusInterceptor i = new MybatisPlusInterceptor();
-        i.addInnerInterceptor(new MybatisPlusDataPermInterceptor(dataPermClient));
         i.addInnerInterceptor(new PaginationInnerInterceptor());
+        i.addInnerInterceptor(new MybatisPlusDataPermInterceptor(dataPermClient));
         return i;
     }
-
 
 
     @Bean
@@ -53,7 +52,7 @@ public class EasyDpConfig {
     public DataPermClient dataPermClient(@Autowired DataPermMatchingModeFinder matchingModeFinder,
                                          @Autowired DataPermRuleFinder ruleFinder,
                                          @Autowired DataPermSqlResolver resolver) {
-        return new BaseDataPermClient(matchingModeFinder, ruleFinder,resolver,subSystem);
+        return new BaseDataPermClient(matchingModeFinder, ruleFinder, resolver, subSystem);
     }
 
 

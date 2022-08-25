@@ -31,7 +31,13 @@ public class CustomerController {
 
     @GetMapping("/listAll")
     public List<Customer> listAll(String userId) {
-        List<Customer> list = iCustomerService.list(new QueryWrapper<>());
+        List<Customer> list = iCustomerService.list(new QueryWrapper<Customer>().like("customer_name","公司").like("customer_name","公司"));        return list;
+    }
+
+    @GetMapping("/listAllWithPerm")
+    public List<Customer> listAllWithPerm(String userId) {
+        DataPermHelper.applyPermission(userId);
+        List<Customer> list = iCustomerService.list(new QueryWrapper<Customer>().like("customer_name","公司").like("customer_name","公司"));
         return list;
     }
 
@@ -39,14 +45,6 @@ public class CustomerController {
     public IPage<Customer> page(String userId) {
         IPage<Customer> ret = iCustomerService.page(new Page<>(1, 5), new QueryWrapper<>());
         return ret;
-    }
-
-    @GetMapping("/listAllWithPerm")
-    public List<Customer> listAllWithPerm(String userId) {
-        DataPermHelper.applyPermission(userId);
-        Customer param = new Customer();
-        List<Customer> list = iCustomerService.list(new QueryWrapper<Customer>().like("customer_name","公司").like("customer_name","公司"));
-        return list;
     }
 
     @GetMapping("/pageWithPerm")
